@@ -100,7 +100,7 @@ export default function HeroSequence() {
       const isMobile = window.innerWidth < 768;
       
       // Zoom out slightly on mobile (0.85x) to reveal more of the bottle height
-      const scale = Math.max(cw / iw, ch / ih) * (isMobile ? 0.85 : 1);
+      const scale = Math.max(cw / iw, ch / ih) * (isMobile ? 0.75 : 1);
       const sw = iw * scale;
       const sh = ih * scale;
       
