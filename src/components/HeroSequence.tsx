@@ -112,11 +112,10 @@ export default function HeroSequence() {
     };
 
     const tick = () => {
-      // Using a slightly more aggressive lerp (0.12) for that "buttery but responsive" feel.
-      // High-precision diffing to prevent unnecessary draws.
+      // Increased lerp factor (0.18) for a faster, "snappier" catch-up while remaining buttery.
       const diff = targetPRef.current - smoothPRef.current;
       if (Math.abs(diff) > 0.0001) {
-        smoothPRef.current += diff * 0.12;
+        smoothPRef.current += diff * 0.18;
       } else {
         smoothPRef.current = targetPRef.current;
       }
