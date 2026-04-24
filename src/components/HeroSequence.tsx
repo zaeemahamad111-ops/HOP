@@ -215,7 +215,7 @@ export default function HeroSequence() {
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#06050a]/80 via-transparent to-[#06050a]/80 md:bg-gradient-to-r md:from-[#06050a]/95 md:via-[#06050a]/50 md:to-transparent" />
 
         {SCENES.map((scene, i) => (
-          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center items-center md:items-start text-center md:text-left pt-[12vh] md:pt-0 px-8 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
+          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center items-center md:items-start text-center md:text-left pt-[20vh] md:pt-0 px-8 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
             <span className="block mb-3 uppercase font-medium" style={{ color: GOLD, fontSize: 10, letterSpacing: "0.5em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
             <h1 className="font-display leading-[1] mb-6 text-ivory" style={{ fontSize: "clamp(2rem, 8vw, 6.5rem)", letterSpacing: "-0.02em" }}>
               <span className="block">{scene.line1}</span>
