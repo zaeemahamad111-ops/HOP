@@ -90,7 +90,7 @@ export default function HeroSequence() {
       const canvas = canvasRef.current;
       const img = images[idx];
       if (!canvas || !img || !img.complete) return;
-      const ctx = canvas.getContext("2d", { alpha: false }); // Performance hint
+      const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
 
       const cw = canvas.width;
@@ -100,7 +100,13 @@ export default function HeroSequence() {
       const scale = Math.max(cw / iw, ch / ih);
       const sw = iw * scale;
       const sh = ih * scale;
-      const sx = (cw - sw) / 2;
+      
+      // On mobile, the bottle is often naturally off-center in the frame.
+      // We shift it right by a small percentage of the scaled width to center it.
+      const isMobile = window.innerWidth < 768;
+      const mobileOffset = isMobile ? sw * 0.08 : 0;
+      
+      const sx = (cw - sw) / 2 + mobileOffset;
       const sy = (ch - sh) / 2;
 
       ctx.drawImage(img, sx, sy, sw, sh);
