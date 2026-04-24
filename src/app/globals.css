@@ -1,26 +1,113 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ── Core Palette ───────────────────────────── */
+  --color-teak:      #1A1510;   /* Primary dark */
+  --color-ivory:     #F5F0E8;   /* Primary light */
+  --color-gold:      #C8A96E;   /* Metallic accent */
+  --color-ghats:     #2C4A3E;   /* Western Ghats green */
+  --color-vetiver:   #8B7355;   /* Mid-brown */
+  --color-limestone: #D4C5B0;   /* Warm grey */
+  /* ── New Colors ─────────────────────────────── */
+  --color-laterite:  #C4622D;   /* Kerala's iron-red soil */
+  --color-mist:      #D6E4E0;   /* Coastal morning mist */
+  --color-smoke:     #2A2520;   /* Rich dark smoke */
+
+  /* ── Fonts ──────────────────────────────────── */
+  --font-display: var(--font-canela), "Playfair Display", serif;
+  --font-body:    var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-accent:  var(--font-cormorant), "Cormorant Garamond", serif;
+  --font-mono:    var(--font-jetbrains), "JetBrains Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Keyframes ──────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-@media (prefers-color-scheme: dark) {
+@keyframes float-up {
+  0%   { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+  50%  { transform: translateY(-18px) rotate(1.5deg); opacity: 1; }
+  100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* grain keyframe removed — was causing 2fps style recalcs across page */
+
+/* ── Base ───────────────────────────────────────── */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-ivory);
+    --foreground: var(--color-teak);
+    color-scheme: light;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: auto !important;
 }
+
+body {
+  background-color: #0a0805;
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-display); font-weight: 400; }
+
+/* ── Static grain overlay (no animation = zero repaint cost) ── */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ── Text shimmer ───────────────────────────────── */
+.text-shimmer {
+  background: linear-gradient(120deg, var(--color-gold) 0%, #ffe4a0 40%, var(--color-gold) 60%, #c8965a 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Magnetic btn ───────────────────────────────── */
+.btn-magnetic {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+  will-change: transform;
+}
+
+/* ── 3D card ────────────────────────────────────── */
+.card-3d {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.4s;
+}
+
+/* ── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-teak); }
+::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 3px; }
+
+/* ── Typography ─────────────────────────────────── */
+.text-hero { font-size: 80px; line-height: 1.05; font-family: var(--font-display); }
+.text-h1   { font-size: 56px; line-height: 1.08; font-family: var(--font-display); }
+.text-h2   { font-size: 40px; line-height: 1.1;  font-family: var(--font-display); }
+.text-h3   { font-size: 28px; line-height: 1.1;  font-family: var(--font-display); }
+.text-body { font-size: 17px; line-height: 1.75; }
+.text-label { font-size: 11px; line-height: 1.3; letter-spacing: 0.05em; text-transform: uppercase; }

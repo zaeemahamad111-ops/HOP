@@ -1,0 +1,131 @@
+{
+  "products": [
+    {
+      "name": "Oud Luminara",
+      "sku": "HOP-VXR8",
+      "price": 5599,
+      "stock": 250,
+      "category": "Eau de Parfum",
+      "image": "/uploads/1777054051816-perfume-6.png",
+      "notes": {
+        "top": "Saffron, Lemon, Apple",
+        "heart": "Rose, Geranium, Incense",
+        "base": "Oud, Amber, Sandalwood, Musk"
+      },
+      "id": "fy5p5z1hk",
+      "status": "In Stock",
+      "categoryShort": "EDP",
+      "ml": "50ml",
+      "descriptor": "A new journey in scent."
+    },
+    {
+      "name": "Nocturne Véra",
+      "sku": "HOP-WJY8",
+      "price": 2999,
+      "stock": 150,
+      "category": "Eau de Parfum",
+      "image": "/uploads/1777054022393-perfume-5.png",
+      "notes": {
+        "top": "Fig, Plum, Bergamot",
+        "heart": "Orris, Rose, Black Tea",
+        "base": "Musk, Labdanum, Oud"
+      },
+      "id": "xq5z2qy6v",
+      "status": "In Stock",
+      "categoryShort": "EDP",
+      "ml": "50ml",
+      "descriptor": "A new journey in scent."
+    },
+    {
+      "name": "Céleste Ember",
+      "sku": "HOP-RJAA",
+      "price": 6000,
+      "stock": 200,
+      "category": "Eau de Parfum",
+      "image": "/uploads/1777053976046-perfume-4.png",
+      "notes": {
+        "top": "Mandarin, Pear, Pink Pepper",
+        "heart": "Orange Blossom, Tuberose, Honey",
+        "base": "Vanilla, Benzoin, Sandalwood"
+      },
+      "id": "hrwe3o59m",
+      "status": "In Stock",
+      "categoryShort": "EDP",
+      "ml": "50ml",
+      "descriptor": "A new journey in scent."
+    },
+    {
+      "name": "Saffron Éclipse",
+      "sku": "HOP-7HH4",
+      "price": 4199,
+      "stock": 100,
+      "category": "Eau de Parfum",
+      "image": "/uploads/1777053931830-perfume-3.png",
+      "notes": {
+        "top": "Saffron, Cardamom, Blood Orange",
+        "heart": "Jasmine, Cinnamon, Leather",
+        "base": "Oud, Amber, Tonka Bean"
+      },
+      "id": "2rgnk4d1h",
+      "status": "In Stock",
+      "categoryShort": "EDP",
+      "ml": "50ml",
+      "descriptor": "A new journey in scent."
+    },
+    {
+      "name": "Aether Noire",
+      "sku": "HOP-QYN2",
+      "price": 5599,
+      "stock": 100,
+      "category": "Eau de Parfum",
+      "image": "/uploads/1777053781591-perfume-2.png",
+      "notes": {
+        "top": "Aldehydes, Lemon Zest, Juniper",
+        "heart": "Iris, Incense, Lavender",
+        "base": "Vetiver, Ambergris, Cedarwood"
+      },
+      "id": "zpntezt70",
+      "status": "In Stock",
+      "categoryShort": "EDP",
+      "ml": "50ml",
+      "descriptor": "A new journey in scent."
+    },
+    {
+      "name": "Velour Obscura",
+      "sku": "HOP-ZKCG",
+      "price": 4999,
+      "stock": 1211,
+      "category": "Eau de Parfum",
+      "image": "/uploads/1777053079874-perfume-1.png",
+      "notes": {
+        "top": "Blackcurrant, Pink Pepper, Bergamot",
+        "heart": "Rose Absolute, Violet, Cashmere Wood",
+        "base": "Vanilla, Amber, Musk, Patchouli"
+      },
+      "id": "72ix4spch",
+      "status": "In Stock",
+      "categoryShort": "EDP",
+      "ml": "50ml",
+      "descriptor": "A new journey in scent."
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-5819",
+      "date": "24 Apr 2026",
+      "client": "Ahamad Zaeem",
+      "email": "dgbs@gmail.com",
+      "items": [
+        {
+          "id": "72ix4spch",
+          "name": "Monsoon Vetiver",
+          "price": 3456,
+          "quantity": 1
+        }
+      ],
+      "total": 3956,
+      "status": "Delivered",
+      "method": "Prepaid"
+    }
+  ]
+}
