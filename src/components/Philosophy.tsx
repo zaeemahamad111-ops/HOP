@@ -46,7 +46,7 @@ export default function Philosophy() {
               </motion.p>
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
                 className="grid grid-cols-3 gap-4 md:gap-8 pt-8 border-t border-ivory/5">
-                {[["14", "Partners"], ["2019", "Founded"], ["3", "EDPs"]].map(([val, label]) => (
+                {[["4", "Partners"], ["2019", "Founded"], ["3", "EDPs"]].map(([val, label]) => (
                   <div key={label}>
                     <span className="font-display text-gold text-2xl md:text-3xl block" style={{ letterSpacing: "-0.03em" }}>{val}</span>
                     <span className="text-[8px] md:text-[9px] tracking-[0.25em] text-ivory/30 uppercase mt-1 block">{label}</span>

@@ -215,7 +215,7 @@ export default function ParallaxScene() {
         {/* ── Stats (appear last) ── */}
         <div ref={statsRef} className="absolute bottom-14 right-8 md:right-20 flex flex-col items-end gap-5 z-20"
           style={{ opacity:0, transform:"translate3d(0,20px,0)", willChange:"transform,opacity" }}>
-          {[["3,000", "years of trade"], ["14", "farm partners"], ["EST. 2019", "Thrissur, Kerala"]].map(([val, label]) => (
+          {[["3,000", "years of trade"], ["4", "partners"], ["EST. 2019", "Thrissur, Kerala"]].map(([val, label]) => (
             <div key={val} className="text-right">
               <span className="font-display text-ivory/70 block leading-none"
                 style={{ fontSize:"clamp(1.5rem,2.5vw,2.5rem)", letterSpacing:"-0.02em" }}>
