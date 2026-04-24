@@ -85,17 +85,16 @@ export default function TheCollection() {
             {filtered.map((product, index) => (
               <motion.div 
                 key={product.id} 
-                layout 
                 initial={{ opacity: 0, y: 20 }} 
                 animate={{ 
                   opacity: 1, 
-                  y: typeof window !== 'undefined' && window.innerWidth < 1024 ? 0 : (index % 3 === 0 ? 0 : index % 3 === 1 ? 40 : 80)
+                  y: 0
                 }} 
                 exit={{ opacity: 0 }} 
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 className="h-fit"
               >
-                <TiltCard className="bg-ivory group relative flex flex-col overflow-hidden cursor-pointer h-full border border-teak/5 hover:border-gold/30 transition-colors duration-500 shadow-sm hover:shadow-2xl">
+                <div className="bg-ivory group relative flex flex-col overflow-hidden cursor-pointer h-full border border-teak/5 hover:border-gold/30 transition-colors duration-500 shadow-sm hover:shadow-2xl">
                   <div className="relative overflow-hidden flex items-center justify-center aspect-[3/4]"
                     style={{ backgroundColor: "#f0ece4" }}
                     onMouseEnter={() => setHoveredId(product.id)}
@@ -109,8 +108,7 @@ export default function TheCollection() {
                     <div className="absolute top-5 right-5 text-[9px] tracking-[0.15em] text-teak/40 bg-ivory/70 backdrop-blur-sm px-2 py-1">
                       {product.ml}
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 translate-y-full lg:group-hover:translate-y-0 transition-transform duration-500 ease-out z-10 lg:translate-y-full">
-                      {/* On mobile, we keep the button visible or always translated up slightly */}
+                    <div className="absolute inset-x-0 bottom-0 lg:translate-y-full lg:group-hover:translate-y-0 transition-transform duration-500 ease-out z-10 translate-y-0">
                       <button onClick={(e) => {
                         e.stopPropagation();
                         addItem({id:product.id,name:product.name,price:product.price,category:product.category,quantity:1,image:product.image,notesSummary:`${product.notes.top} · ${product.notes.base}`});
@@ -128,7 +126,7 @@ export default function TheCollection() {
                       <span className="font-mono text-sm text-teak/45 shrink-0 ml-2">₹{product.price.toLocaleString("en-IN")}</span>
                     </div>
                     <p className="font-accent italic text-teak/45 text-sm md:text-base pl-2">{product.descriptor}</p>
-                    <div className={`grid grid-cols-3 gap-2 pt-4 border-t border-teak/6 overflow-hidden transition-all duration-400 pl-2 ${hoveredId===product.id || (typeof window !== 'undefined' && window.innerWidth < 768) ? "max-h-24 opacity-100":"max-h-0 opacity-0"}`}>
+                    <div className={`grid grid-cols-3 gap-2 pt-4 border-t border-teak/6 overflow-hidden transition-all duration-400 pl-2 ${hoveredId===product.id ? "max-h-24 opacity-100":"max-h-0 opacity-0"}`}>
                       {Object.entries(product.notes).map(([tier,name]) => (
                         <div key={tier} className="flex flex-col">
                           <span className="text-[8px] tracking-[0.3em] text-teak/25 mb-0.5 uppercase">{tier}</span>
@@ -137,7 +135,7 @@ export default function TheCollection() {
                       ))}
                     </div>
                   </div>
-                </TiltCard>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>

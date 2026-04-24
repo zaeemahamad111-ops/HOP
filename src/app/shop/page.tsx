@@ -110,7 +110,6 @@ export default function ShopPage() {
             {filtered.map((product, i) => (
               <motion.div 
                 key={product.id} 
-                layout 
                 initial={{ opacity: 0, y: 30 }} 
                 animate={{ opacity: 1, y: 0 }} 
                 exit={{ opacity: 0, scale: 0.95 }}

@@ -60,9 +60,12 @@ export default function HeroSequence() {
         images.push(img);
         
         img.onload = async () => {
-          try {
-            await img.decode(); // Push to GPU
-          } catch (e) {}
+          const isMobile = window.innerWidth < 768;
+          if (!isMobile) {
+            try {
+              await img.decode(); // Push to GPU only on desktop
+            } catch (e) {}
+          }
           
           loaded++;
           const pct = Math.round((loaded / TOTAL_FRAMES) * 100);
@@ -181,7 +184,9 @@ export default function HeroSequence() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      // LIMIT DPR on mobile to 1.5, desktop 2. This significantly reduces GPU memory usage.
+      const isMobile = window.innerWidth < 768;
+      const dpr = Math.min(isMobile ? 1.5 : 2, window.devicePixelRatio || 1);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
