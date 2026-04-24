@@ -60,12 +60,10 @@ export default function HeroSequence() {
         images.push(img);
         
         img.onload = async () => {
-          const isMobile = window.innerWidth < 768;
-          if (!isMobile) {
-            try {
-              await img.decode(); // Push to GPU only on desktop
-            } catch (e) {}
-          }
+          try {
+            // Decoding JPGs is much faster than PNGs, enabling for mobile too for smoothness.
+            await img.decode();
+          } catch (e) {}
           
           loaded++;
           const pct = Math.round((loaded / TOTAL_FRAMES) * 100);
@@ -90,7 +88,7 @@ export default function HeroSequence() {
       const canvas = canvasRef.current;
       const img = images[idx];
       if (!canvas || !img || !img.complete) return;
-      const ctx = canvas.getContext("2d", { alpha: false }); // Performance hint
+      const ctx = canvas.getContext("2d", { alpha: false });
       if (!ctx) return;
 
       const cw = canvas.width;
@@ -103,17 +101,18 @@ export default function HeroSequence() {
       const sx = (cw - sw) / 2;
       const sy = (ch - sh) / 2;
       const isMobile = window.innerWidth < 768;
-      const offsetX = isMobile ? (sw - cw) * 0.05 : 0; // Slight shift to right
+      // Increased mobile offset slightly to ensure the bottle remains the focal point
+      const offsetX = isMobile ? (sw - cw) * 0.12 : 0; 
       ctx.drawImage(img, sx + offsetX, sy, sw, sh);
     };
 
     const tick = () => {
       rafRef.current = requestAnimationFrame(tick);
 
-      // Lerp factor 0.09 — ~25% more damping than before for a silkier trailing feel
+      // Slower lerp (0.06) creates that "weighty" luxury feel the user wants.
       const diff = targetPRef.current - smoothPRef.current;
       if (Math.abs(diff) > 0.0001) {
-        smoothPRef.current += diff * 0.09;
+        smoothPRef.current += diff * 0.06;
       }
       const p = smoothPRef.current;
 
@@ -131,14 +130,14 @@ export default function HeroSequence() {
         const el = sceneRefs.current[i];
         if (!el) return;
         const [lo, hi] = scene.range;
-        const FADE = 0.06;
+        const FADE = 0.08; // Slightly longer fade for smoother text transitions
         let opacity = 0;
         let ty = 0;
-        if (p > lo - FADE && p < hi) {
+        if (p > lo - FADE && p < hi + FADE) {
           const inT = eio((p - (lo - FADE)) / FADE);
-          const outT = eio(Math.max(0, p - (hi - FADE)) / FADE);
+          const outT = eio(Math.max(0, p - hi) / FADE);
           opacity = inT * (1 - outT);
-          ty = (1 - inT) * 20 - outT * 10;
+          ty = (1 - inT) * 15 - outT * 10;
         }
         el.style.opacity = String(opacity);
         el.style.transform = `translate3d(0,${ty}px,0)`;
@@ -152,7 +151,7 @@ export default function HeroSequence() {
           dot.style.width = di === activeScene ? "32px" : "5px";
           dot.style.backgroundColor = di === activeScene ? GOLD : "rgba(245,240,232,0.15)";
         });
-        if (counterRef.current && activeScene >= 0) counterRef.current.textContent = `${activeScene + 1} / 4`;
+        if (counterRef.current && activeScene >= 0) counterRef.current.textContent = `${activeScene + 1} / 3`;
       }
 
       if (ctaRef.current) {
@@ -187,7 +186,7 @@ export default function HeroSequence() {
     const resize = () => {
       // LIMIT DPR on mobile to 1.0 for maximum performance, desktop 2.
       const isMobile = window.innerWidth < 768;
-      const dpr = Math.min(isMobile ? 1.0 : 2, window.devicePixelRatio || 1);
+      const dpr = Math.min(isMobile ? 1.2 : 2, window.devicePixelRatio || 1);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
@@ -205,13 +204,13 @@ export default function HeroSequence() {
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#06050a]/80 via-transparent to-[#06050a]/80 md:bg-gradient-to-r md:from-[#06050a]/95 md:via-[#06050a]/50 md:to-transparent" />
 
         {SCENES.map((scene, i) => (
-          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-32 md:pt-0 px-6 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
-            <span className="block mb-2 uppercase font-medium" style={{ color: GOLD, fontSize: 9, letterSpacing: "0.4em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
-            <h1 className="font-display leading-[0.95] mb-4 text-ivory" style={{ fontSize: "clamp(1.8rem, 6vw, 6.5rem)", letterSpacing: "-0.02em" }}>
+          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-[18vh] md:pt-0 px-8 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
+            <span className="block mb-3 uppercase font-medium" style={{ color: GOLD, fontSize: 10, letterSpacing: "0.5em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
+            <h1 className="font-display leading-[1] mb-6 text-ivory" style={{ fontSize: "clamp(2rem, 8vw, 6.5rem)", letterSpacing: "-0.02em" }}>
               <span className="block">{scene.line1}</span>
               <em className="not-italic block" style={{ color: GOLD }}>{scene.line2}</em>
             </h1>
-            <p className="font-accent italic leading-relaxed text-ivory/40 max-w-[280px] md:max-w-xl" style={{ fontSize: "clamp(0.8rem, 1.3vw, 1.1rem)" }}>{scene.sub}</p>
+            <p className="font-accent italic leading-relaxed text-ivory/40 max-w-[280px] md:max-w-xl" style={{ fontSize: "clamp(0.85rem, 1.3vw, 1.1rem)" }}>{scene.sub}</p>
           </div>
         ))}
 
@@ -221,7 +220,7 @@ export default function HeroSequence() {
 
         <div className="absolute left-7 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-20">
           <div className="w-[1px] h-20 bg-ivory/10 relative overflow-hidden"><div ref={fillRef} className="absolute top-0 left-0 w-full h-full bg-gold origin-top" style={{ transform: "scaleY(0)" }} /></div>
-          <span ref={counterRef} className="text-[8px] tracking-[0.3em] text-ivory/20 vertical-rl">— / 4</span>
+          <span ref={counterRef} className="text-[8px] tracking-[0.3em] text-ivory/20 vertical-rl">— / 3</span>
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
