@@ -13,13 +13,13 @@
 
 import { useEffect, useRef } from "react";
 
-const TOTAL_FRAMES = 77;
-const FRAME_PATH = (i: number) => `/frames-jpg/frame-${String(i).padStart(3, "0")}.jpg`;
+const TOTAL_FRAMES = 39;
+const FRAME_PATH = (i: number) => `/frames-v2/ezgif-frame-${String(i).padStart(3, "0")}.png`;
 
 const SCENES = [
-  { range: [0.15, 0.40] as [number, number], eyebrow: "WORLD CLASS", line1: "One of the Finest", line2: "Perfume Brands in India.", sub: "Crafting unparalleled olfactory experiences." },
-  { range: [0.42, 0.65] as [number, number], eyebrow: "GLOBAL INGREDIENTS", line1: "Sourced", line2: "from the World.", sub: "The finest extracts from Turkey, Switzerland, France, and Australia." },
-  { range: [0.68, 1.0] as [number, number], eyebrow: "THE COLLECTION", line1: "Experience", line2: "True Luxury.", sub: "Discover our signature blends." },
+  { range: [0.10, 0.35] as [number, number], eyebrow: "SCENT IN MOTION", line1: "Pure Extracts", line2: "Captured in Time.", sub: "The raw beauty of single-origin ingredients, frozen in a moment of olfactory perfection." },
+  { range: [0.40, 0.65] as [number, number], eyebrow: "CRAFTED EXCELLENCE", line1: "Where Heritage", line2: "Meets Design.", sub: "Each bottle is a vessel of Malabar history, meticulously crafted for the modern minimalist." },
+  { range: [0.70, 1.0] as [number, number], eyebrow: "HEVEN OF PERFUME", line1: "Experience", line2: "True Luxury.", sub: "Join the ritual of India's finest niche fragrance house. Handcrafted in Kerala." },
 ];
 
 const GOLD = "#C8A96E";
@@ -185,9 +185,9 @@ export default function HeroSequence() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const resize = () => {
-      // LIMIT DPR on mobile to 1.5, desktop 2. This significantly reduces GPU memory usage.
+      // LIMIT DPR on mobile to 1.0 for maximum performance, desktop 2.
       const isMobile = window.innerWidth < 768;
-      const dpr = Math.min(isMobile ? 1.5 : 2, window.devicePixelRatio || 1);
+      const dpr = Math.min(isMobile ? 1.0 : 2, window.devicePixelRatio || 1);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
