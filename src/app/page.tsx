@@ -6,6 +6,7 @@ import Marquee from "@/components/Marquee";
 import Philosophy from "@/components/Philosophy";
 import Ritual from "@/components/Ritual";
 import Discovery from "@/components/Discovery";
+import Partners from "@/components/Partners";
 import StoriesPreview from "@/components/StoriesPreview";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -31,6 +32,7 @@ export default function Home() {
       <Philosophy />
       <Ritual />
       <Discovery />
+      <Partners />
       <StoriesPreview />
 
       {/* ── Footer ── */}
