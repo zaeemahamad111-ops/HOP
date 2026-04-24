@@ -43,7 +43,7 @@ export default function Ritual() {
           >
             <div className="relative aspect-[3/4] overflow-hidden rounded-sm">
               <Image
-                src="/lady.jpg"
+                src="/lady-perfumer.png"
                 alt="The art of wearing a scent"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
