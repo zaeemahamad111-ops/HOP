@@ -18,9 +18,9 @@ const TOTAL_FRAMES = 77;
 const FRAME_PATH = (i: number) => `/frames-77/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
 
 const SCENES = [
-  { range: [0.10, 0.40] as [number, number], eyebrow: "SCENT IN MOTION", line1: "Pure Extracts", line2: "Captured in Time.", sub: "The raw beauty of single-origin ingredients, frozen in a moment of olfactory perfection." },
-  { range: [0.45, 0.70] as [number, number], eyebrow: "CRAFTED EXCELLENCE", line1: "Where Heritage", line2: "Meets Design.", sub: "Each bottle is a vessel of Malabar history, meticulously crafted for the modern minimalist." },
-  { range: [0.75, 1.0] as [number, number], eyebrow: "HEVEN OF PERFUME", line1: "Experience", line2: "True Luxury.", sub: "Join the ritual of India's finest niche fragrance house. Handcrafted in Kerala." },
+  { range: [0.08, 0.32] as [number, number], eyebrow: "SCENT IN MOTION", line1: "Pure Extracts", line2: "Captured in Time.", sub: "The raw beauty of single-origin ingredients, frozen in a moment of olfactory perfection." },
+  { range: [0.42, 0.68] as [number, number], eyebrow: "CRAFTED EXCELLENCE", line1: "Where Heritage", line2: "Meets Design.", sub: "Each bottle is a vessel of Malabar history, meticulously crafted for the modern minimalist." },
+  { range: [0.78, 0.98] as [number, number], eyebrow: "HEVEN OF PERFUME", line1: "Experience", line2: "True Luxury.", sub: "Join the ritual of India's finest niche fragrance house. Handcrafted in Kerala." },
 ];
 
 const GOLD = "#C8A96E";
@@ -103,8 +103,8 @@ export default function HeroSequence() {
       const sx = (cw - sw) / 2;
       const sy = (ch - sh) / 2;
       const isMobile = window.innerWidth < 768;
-      // Precision centering for mobile bottle focal point
-      const offsetX = isMobile ? (sw - cw) * 0.12 : 0; 
+      // Negative offset shifts the image left, centering the bottle on narrow screens
+      const offsetX = isMobile ? (sw - cw) * -0.08 : 0; 
       
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
@@ -210,7 +210,7 @@ export default function HeroSequence() {
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#06050a]/80 via-transparent to-[#06050a]/80 md:bg-gradient-to-r md:from-[#06050a]/95 md:via-[#06050a]/50 md:to-transparent" />
 
         {SCENES.map((scene, i) => (
-          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-[22vh] md:pt-0 px-10 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
+          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-[30vh] md:pt-0 px-10 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
             <span className="block mb-3 uppercase font-medium" style={{ color: GOLD, fontSize: 10, letterSpacing: "0.5em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
             <h1 className="font-display leading-[1] mb-6 text-ivory" style={{ fontSize: "clamp(2rem, 8vw, 6.5rem)", letterSpacing: "-0.02em" }}>
               <span className="block">{scene.line1}</span>
