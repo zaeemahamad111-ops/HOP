@@ -27,19 +27,18 @@ export default function Navigation() {
       <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
         scrolled ? "bg-[#06050a]/85 backdrop-blur-2xl border-b border-ivory/5 h-[76px]" : "bg-transparent h-[100px]"
       }`}>
-        <div className="h-full px-6 md:px-16 flex items-center justify-between max-w-[1800px] mx-auto relative">
-          {/* Logo - Desktop (Left) & Mobile (Center) */}
-          <div className="md:block hidden">
-            <Link href="/" className="flex items-center">
-              <Image src="/hop-logo.png" alt="HOP" width={200} height={100} className="object-contain brightness-[1.1]" priority />
-            </Link>
-          </div>
-
-          <div className="md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Link href="/" className="flex items-center">
-              <Image src="/hop-logo.png" alt="HOP" width={140} height={70} className="object-contain brightness-[1.1]" priority />
-            </Link>
-          </div>
+        <div className="h-full px-6 md:px-16 flex items-center justify-between max-w-[1800px] mx-auto">
+          {/* Logo - Always Left */}
+          <Link href="/" className="flex items-center">
+            <Image 
+              src="/hop-logo.png" 
+              alt="HOP" 
+              width={140} 
+              height={70} 
+              className="w-[100px] md:w-[180px] object-contain brightness-[1.1]" 
+              priority 
+            />
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-10">

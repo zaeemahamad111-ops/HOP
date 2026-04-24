@@ -199,13 +199,13 @@ export default function HeroSequence() {
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(6,5,10,0.95) 0%, rgba(6,5,10,0.5) 45%, transparent 65%)" }} />
 
         {SCENES.map((scene, i) => (
-          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-24 md:pt-0 px-10 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
-            <span className="block mb-3 uppercase font-medium" style={{ color: GOLD, fontSize: 10, letterSpacing: "0.4em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
-            <h1 className="font-display leading-[0.9] mb-4 text-ivory" style={{ fontSize: "clamp(2rem, 6vw, 6.5rem)", letterSpacing: "-0.03em" }}>
+          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-32 md:pt-0 px-6 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
+            <span className="block mb-2 uppercase font-medium" style={{ color: GOLD, fontSize: 9, letterSpacing: "0.4em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
+            <h1 className="font-display leading-[0.95] mb-4 text-ivory" style={{ fontSize: "clamp(1.8rem, 6vw, 6.5rem)", letterSpacing: "-0.02em" }}>
               <span className="block">{scene.line1}</span>
               <em className="not-italic block" style={{ color: GOLD }}>{scene.line2}</em>
             </h1>
-            <p className="font-accent italic leading-relaxed text-ivory/40 max-w-xl" style={{ fontSize: "clamp(0.85rem, 1.3vw, 1.1rem)" }}>{scene.sub}</p>
+            <p className="font-accent italic leading-relaxed text-ivory/40 max-w-[280px] md:max-w-xl" style={{ fontSize: "clamp(0.8rem, 1.3vw, 1.1rem)" }}>{scene.sub}</p>
           </div>
         ))}
 
