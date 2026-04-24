@@ -13,13 +13,13 @@
 
 import { useEffect, useRef } from "react";
 
-const TOTAL_FRAMES = 39;
-const FRAME_PATH = (i: number) => `/frames-v2/ezgif-frame-${String(i).padStart(3, "0")}.png`;
+const TOTAL_FRAMES = 77;
+const FRAME_PATH = (i: number) => `/frames-77/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
 
 const SCENES = [
-  { range: [0.10, 0.35] as [number, number], eyebrow: "SCENT IN MOTION", line1: "Pure Extracts", line2: "Captured in Time.", sub: "The raw beauty of single-origin ingredients, frozen in a moment of olfactory perfection." },
-  { range: [0.40, 0.65] as [number, number], eyebrow: "CRAFTED EXCELLENCE", line1: "Where Heritage", line2: "Meets Design.", sub: "Each bottle is a vessel of Malabar history, meticulously crafted for the modern minimalist." },
-  { range: [0.70, 1.0] as [number, number], eyebrow: "HEVEN OF PERFUME", line1: "Experience", line2: "True Luxury.", sub: "Join the ritual of India's finest niche fragrance house. Handcrafted in Kerala." },
+  { range: [0.10, 0.40] as [number, number], eyebrow: "SCENT IN MOTION", line1: "Pure Extracts", line2: "Captured in Time.", sub: "The raw beauty of single-origin ingredients, frozen in a moment of olfactory perfection." },
+  { range: [0.45, 0.70] as [number, number], eyebrow: "CRAFTED EXCELLENCE", line1: "Where Heritage", line2: "Meets Design.", sub: "Each bottle is a vessel of Malabar history, meticulously crafted for the modern minimalist." },
+  { range: [0.75, 1.0] as [number, number], eyebrow: "HEVEN OF PERFUME", line1: "Experience", line2: "True Luxury.", sub: "Join the ritual of India's finest niche fragrance house. Handcrafted in Kerala." },
 ];
 
 const GOLD = "#C8A96E";
