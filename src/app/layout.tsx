@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Cormorant_Garamond, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -98,8 +99,10 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${playfair.variable} antialiased selection:bg-gold selection:text-teak`}
       >
-        {children}
-        <CartDrawer />
+        <SmoothScroll>
+          {children}
+          <CartDrawer />
+        </SmoothScroll>
       </body>
     </html>
   );
