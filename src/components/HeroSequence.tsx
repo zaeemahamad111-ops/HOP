@@ -90,7 +90,7 @@ export default function HeroSequence() {
       const canvas = canvasRef.current;
       const img = images[idx];
       if (!canvas || !img || !img.complete) return;
-      const ctx = canvas.getContext("2d", { alpha: false });
+      const ctx = canvas.getContext("2d", { alpha: false }); // Performance hint
       if (!ctx) return;
 
       const cw = canvas.width;
@@ -100,16 +100,11 @@ export default function HeroSequence() {
       const scale = Math.max(cw / iw, ch / ih);
       const sw = iw * scale;
       const sh = ih * scale;
-      
-      // On mobile, the bottle is often naturally off-center in the frame.
-      // We shift it right by a small percentage of the scaled width to center it.
-      const isMobile = window.innerWidth < 768;
-      const mobileOffset = isMobile ? sw * -0.10 : 0;
-      
-      const sx = (cw - sw) / 2 + mobileOffset;
+      const sx = (cw - sw) / 2;
       const sy = (ch - sh) / 2;
-
-      ctx.drawImage(img, sx, sy, sw, sh);
+      const isMobile = window.innerWidth < 768;
+      const offsetX = isMobile ? (sw - cw) * 0.05 : 0; // Slight shift to right
+      ctx.drawImage(img, sx + offsetX, sy, sw, sh);
     };
 
     const tick = () => {
@@ -207,7 +202,7 @@ export default function HeroSequence() {
     <div ref={wrapRef} style={{ height: "500vh" }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#06050a]">
         <canvas ref={canvasRef} className="absolute inset-0" />
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(6,5,10,0.95) 0%, rgba(6,5,10,0.5) 45%, transparent 65%)" }} />
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#06050a]/80 via-transparent to-[#06050a]/80 md:bg-gradient-to-r md:from-[#06050a]/95 md:via-[#06050a]/50 md:to-transparent" />
 
         {SCENES.map((scene, i) => (
           <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-32 md:pt-0 px-6 md:px-24 pointer-events-none" style={{ opacity: 0 }}>

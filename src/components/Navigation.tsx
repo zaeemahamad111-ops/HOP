@@ -29,7 +29,7 @@ export default function Navigation() {
       }`}>
         <div className="h-full px-6 md:px-16 flex items-center justify-between max-w-[1800px] mx-auto">
           {/* Logo - Always Left */}
-          <Link href="/" className="flex items-center order-1">
+          <Link href="/" className="flex items-center">
             <Image 
               src="/hop-logo.png" 
               alt="HOP" 
@@ -41,7 +41,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-10 order-2">
+          <div className="hidden md:flex items-center space-x-10">
             {[["Shop","/shop"],["Stories","/stories"],["About","/about"]].map(([label, href]) => (
               <Link key={label} href={href}
                 className="text-[10px] tracking-[0.35em] font-bold text-ivory/80 hover:text-gold transition-all duration-400 uppercase relative group">
@@ -52,7 +52,7 @@ export default function Navigation() {
           </div>
 
           {/* Icons */}
-          <div className="flex items-center space-x-7 text-ivory/80 order-3">
+          <div className="flex items-center space-x-7 text-ivory/80">
             <button className="hover:text-gold transition-all duration-300" aria-label="Search">
               <Search size={17} strokeWidth={1.5} />
             </button>
