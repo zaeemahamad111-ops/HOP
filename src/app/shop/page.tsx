@@ -40,7 +40,7 @@ export default function ShopPage() {
       {/* Hero Header */}
       <div className="relative pt-48 pb-20 px-8 md:px-20 overflow-hidden border-b border-ivory/5">
         <div className="absolute inset-0 pointer-events-none opacity-20">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[120px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[60px] will-change-[filter]" />
         </div>
         <div className="max-w-[1600px] mx-auto relative z-10">
           <motion.span 
@@ -119,7 +119,7 @@ export default function ShopPage() {
                 onMouseLeave={() => setHoveredId(null)}
               >
                 {/* Image Container */}
-                <div className="relative aspect-[4/5] bg-ivory/[0.02] rounded-sm overflow-hidden flex items-center justify-center border border-ivory/[0.05] transition-all duration-700 group-hover:border-gold/20">
+                <div className="relative aspect-[4/5] bg-ivory/[0.02] rounded-sm overflow-hidden flex items-center justify-center border border-ivory/[0.05] transition-all duration-700 group-hover:border-gold/20 will-change-transform">
                   
                   {/* Subtle Background Accent */}
                   <div 
@@ -127,12 +127,17 @@ export default function ShopPage() {
                     style={{ background: `radial-gradient(circle at 50% 70%, ${(product.accent || '#C8A96E')}15 0%, transparent 80%)` }} 
                   />
 
-                  {/* Product Image */}
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
-                    className="h-[75%] object-contain transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-4" 
-                  />
+                  {/* Product Image - Optimized */}
+                  <div className="relative h-[75%] w-[80%] transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-4 will-change-transform">
+                    <Image 
+                      src={product.image} 
+                      alt={product.name} 
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      priority={i < 4}
+                    />
+                  </div>
 
                   {/* Overlays */}
                   <div className="absolute top-6 left-6 px-3 py-1 text-[9px] tracking-[0.25em] font-bold border rounded-full backdrop-blur-sm"

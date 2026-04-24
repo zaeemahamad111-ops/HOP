@@ -79,16 +79,23 @@ export default function FeaturedProducts() {
                 className="group relative flex flex-col border border-ivory/[0.06] hover:border-gold/20 transition-all duration-700 cursor-pointer h-fit shadow-[0_0_20px_rgba(200,169,110,0.05)] md:shadow-none"
               >
                 {/* Image area */}
-                <div className="relative aspect-[3/4] flex items-center justify-center overflow-hidden"
+                <div className="relative aspect-[3/4] flex items-center justify-center overflow-hidden will-change-transform"
                   style={{ background: `radial-gradient(ellipse at center, ${p.accent || '#c8965a'}12 0%, #0a0805 75%)` }}>
 
                   {/* Accent glow */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
                     style={{ background: `radial-gradient(circle at 50% 65%, ${p.accent || '#c8965a'}20 0%, transparent 70%)` }} />
 
-                  {/* Bottle */}
-                  <img src={p.image} alt={p.name}
-                    className="h-[72%] object-contain transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-3 drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]" />
+                  {/* Bottle - Optimized */}
+                  <div className="relative h-[72%] w-[70%] transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-3 will-change-transform">
+                    <Image 
+                      src={p.image} 
+                      alt={p.name} 
+                      fill 
+                      className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
 
                   {/* Number badge */}
                   <span className="absolute top-6 left-6 font-mono text-[10px] tracking-[0.3em] text-ivory/20">0{i + 1}</span>

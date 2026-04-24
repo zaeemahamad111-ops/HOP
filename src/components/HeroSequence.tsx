@@ -117,6 +117,11 @@ export default function HeroSequence() {
     };
 
     const tick = () => {
+      // PERFORMANCE: Only run ticker if Hero is actually visible in the viewport
+      const rect = wrap.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (!isVisible) return;
+
       // Increased lerp factor (0.18) for a faster, "snappier" catch-up while remaining buttery.
       const diff = targetPRef.current - smoothPRef.current;
       if (Math.abs(diff) > 0.0001) {
