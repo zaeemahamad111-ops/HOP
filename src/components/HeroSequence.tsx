@@ -12,6 +12,7 @@
  */
 
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const TOTAL_FRAMES = 77;
 const FRAME_PATH = (i: number) => `/frames-77/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
@@ -26,7 +27,8 @@ const GOLD = "#C8A96E";
 
 function eio(t: number) {
   const c = Math.max(0, Math.min(1, t));
-  return c < 0.5 ? 2 * c * c : -1 + (4 - 2 * c) * c;
+  // Cubic ease-in-out for a smoother, more premium feel
+  return c < 0.5 ? 4 * c * c * c : 1 - Math.pow(-2 * c + 2, 3) / 2;
 }
 
 export default function HeroSequence() {
@@ -101,22 +103,27 @@ export default function HeroSequence() {
       const sx = (cw - sw) / 2;
       const sy = (ch - sh) / 2;
       const isMobile = window.innerWidth < 768;
-      // Increased mobile offset slightly to ensure the bottle remains the focal point
+      // Precision centering for mobile bottle focal point
       const offsetX = isMobile ? (sw - cw) * 0.12 : 0; 
+      
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx.drawImage(img, sx + offsetX, sy, sw, sh);
     };
 
     const tick = () => {
-      rafRef.current = requestAnimationFrame(tick);
-
-      // Slower lerp (0.06) creates that "weighty" luxury feel the user wants.
+      // Using a slightly more aggressive lerp (0.12) for that "buttery but responsive" feel.
+      // High-precision diffing to prevent unnecessary draws.
       const diff = targetPRef.current - smoothPRef.current;
       if (Math.abs(diff) > 0.0001) {
-        smoothPRef.current += diff * 0.06;
+        smoothPRef.current += diff * 0.12;
+      } else {
+        smoothPRef.current = targetPRef.current;
       }
+      
       const p = smoothPRef.current;
-
       const frameIdx = Math.min(TOTAL_FRAMES - 1, Math.round(p * (TOTAL_FRAMES - 1)));
+      
       if (frameIdx !== prevFrameRef.current && framesRef.current.length === TOTAL_FRAMES) {
         prevFrameRef.current = frameIdx;
         drawFrame(frameIdx);
@@ -130,7 +137,7 @@ export default function HeroSequence() {
         const el = sceneRefs.current[i];
         if (!el) return;
         const [lo, hi] = scene.range;
-        const FADE = 0.08; // Slightly longer fade for smoother text transitions
+        const FADE = 0.1; // Longer fade for smoother text transitions
         let opacity = 0;
         let ty = 0;
         if (p > lo - FADE && p < hi + FADE) {
@@ -172,11 +179,11 @@ export default function HeroSequence() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    rafRef.current = requestAnimationFrame(tick);
+    gsap.ticker.add(tick);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(rafRef.current);
+      gsap.ticker.remove(tick);
     };
   }, []);
 
@@ -200,11 +207,11 @@ export default function HeroSequence() {
   return (
     <div ref={wrapRef} style={{ height: "500vh" }} className="relative">
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#06050a]">
-        <canvas ref={canvasRef} className="absolute inset-0" />
+        <canvas ref={canvasRef} className="absolute inset-0" style={{ imageRendering: "-webkit-optimize-contrast" }} />
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#06050a]/80 via-transparent to-[#06050a]/80 md:bg-gradient-to-r md:from-[#06050a]/95 md:via-[#06050a]/50 md:to-transparent" />
 
         {SCENES.map((scene, i) => (
-          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-[18vh] md:pt-0 px-8 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
+          <div key={i} ref={el => { sceneRefs.current[i] = el; }} className="absolute left-0 top-0 bottom-0 w-full md:w-1/2 flex flex-col justify-start md:justify-center pt-[22vh] md:pt-0 px-10 md:px-24 pointer-events-none" style={{ opacity: 0 }}>
             <span className="block mb-3 uppercase font-medium" style={{ color: GOLD, fontSize: 10, letterSpacing: "0.5em", fontFamily: "var(--font-body)" }}>{scene.eyebrow}</span>
             <h1 className="font-display leading-[1] mb-6 text-ivory" style={{ fontSize: "clamp(2rem, 8vw, 6.5rem)", letterSpacing: "-0.02em" }}>
               <span className="block">{scene.line1}</span>
