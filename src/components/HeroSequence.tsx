@@ -190,21 +190,13 @@ export default function HeroSequence() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const resize = () => {
+      // LIMIT DPR on mobile to 1.0 for maximum performance, desktop 2.
       const isMobile = window.innerWidth < 768;
       const dpr = Math.min(isMobile ? 1.2 : 2, window.devicePixelRatio || 1);
-      
-      const targetH = isMobile ? window.innerHeight * 0.8 : window.innerHeight;
       canvas.width = window.innerWidth * dpr;
-      canvas.height = targetH * dpr;
+      canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${targetH}px`;
-      
-      // Center canvas vertically on mobile
-      if (isMobile) {
-        canvas.style.top = "10vh";
-      } else {
-        canvas.style.top = "0";
-      }
+      canvas.style.height = `${window.innerHeight}px`;
     };
     resize();
     window.addEventListener("resize", resize);
