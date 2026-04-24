@@ -104,7 +104,7 @@ export default function HeroSequence() {
       // On mobile, the bottle is often naturally off-center in the frame.
       // We shift it right by a small percentage of the scaled width to center it.
       const isMobile = window.innerWidth < 768;
-      const mobileOffset = isMobile ? sw * -0.30 : 0;
+      const mobileOffset = isMobile ? sw * -0.10 : 0;
       
       const sx = (cw - sw) / 2 + mobileOffset;
       const sy = (ch - sh) / 2;
