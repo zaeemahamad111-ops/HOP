@@ -145,18 +145,22 @@ export default function ShopPage() {
                     {product.ml}
                   </div>
 
-                  {/* Quick Add Button */}
-                  <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+                  {/* Quick Add Button — Always visible on mobile, hover reveal on desktop */}
+                  <div className="absolute inset-x-0 bottom-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] z-10">
                     <button 
-                      onClick={() => addItem({ 
-                        id: product.id, 
-                        name: product.name, 
-                        price: product.price, 
-                        category: product.category, 
-                        quantity: 1, 
-                        notesSummary: `${product.notes.top} · ${product.notes.base}` 
-                      })}
-                      className="w-full py-5 text-[11px] tracking-[0.4em] font-bold text-teak"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addItem({ 
+                          id: product.id, 
+                          name: product.name, 
+                          price: product.price, 
+                          category: product.category, 
+                          quantity: 1, 
+                          image: product.image,
+                          notesSummary: `${product.notes.top} · ${product.notes.base}` 
+                        });
+                      }}
+                      className="w-full py-4 md:py-5 text-[10px] md:text-[11px] tracking-[0.4em] font-bold text-teak"
                       style={{ backgroundColor: GOLD }}
                     >
                       ADD TO CART

@@ -94,20 +94,20 @@ export default function Philosophy() {
         </div>
 
         {/* MOBILE: Vertical Glowing Line (Visible on small screens) */}
-        <div className="md:hidden absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-48 pointer-events-none z-0 opacity-60 transition-opacity duration-1000">
-          <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" className="drop-shadow-[0_0_15px_rgba(200,169,110,0.2)]">
+        <div className="md:hidden absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-64 pointer-events-none z-0 opacity-80 transition-opacity duration-1000">
+          <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" className="drop-shadow-[0_0_25px_rgba(200,169,110,0.5)]">
             <defs>
               <linearGradient id="line-glow-v" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#C8A96E" stopOpacity="0" />
                 <stop offset="5%" stopColor="#C8A96E" stopOpacity="1" />
-                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.6" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.8" />
                 <stop offset="95%" stopColor="#C8A96E" stopOpacity="1" />
                 <stop offset="100%" stopColor="#C8A96E" stopOpacity="0" />
               </linearGradient>
             </defs>
-            <path d="M50,0 Q70,250 50,500 T50,1000" stroke="url(#line-glow-v)" strokeWidth="2" fill="none" />
+            <path d="M50,0 Q70,250 50,500 T50,1000" stroke="url(#line-glow-v)" strokeWidth="3" fill="none" />
             {/* Roots reaching out to stacked cards */}
-            <g stroke="url(#line-glow-v)" strokeWidth="1" fill="none" opacity="0.5">
+            <g stroke="url(#line-glow-v)" strokeWidth="1.5" fill="none" opacity="0.7">
               <path d="M52,125 L80,140 M48,375 L20,360 M52,625 L90,640 M48,875 L15,860" />
             </g>
           </svg>
@@ -116,7 +116,7 @@ export default function Philosophy() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative z-10">
           {pillars.map((p, i) => (
             <motion.div key={p.num} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: i * 0.1 }}
-              className="group relative flex flex-col gap-6 p-6 md:p-8 border border-ivory/5 bg-[#0a0805]/80 backdrop-blur-sm hover:border-gold/40 hover:bg-[#0a0805] hover:shadow-[0_0_40px_rgba(200,169,110,0.15)] transition-all duration-700 overflow-hidden cursor-pointer">
+              className="group relative flex flex-col gap-6 p-6 md:p-8 border border-ivory/5 bg-[#0a0805]/80 backdrop-blur-sm hover:border-gold/40 hover:bg-[#0a0805] shadow-[0_0_20px_rgba(200,169,110,0.05)] md:shadow-none hover:shadow-[0_0_40px_rgba(200,169,110,0.15)] transition-all duration-700 overflow-hidden cursor-pointer">
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style={{ background: `radial-gradient(circle at 50% 50%, ${p.color}30 0%, transparent 80%)` }} />
               <div className="flex justify-between items-center">

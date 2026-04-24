@@ -76,7 +76,7 @@ export default function FeaturedProducts() {
                 transition={{ duration: 1, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                 onMouseEnter={() => setHovered(p.id)}
                 onMouseLeave={() => setHovered(null)}
-                className="group relative flex flex-col border border-ivory/[0.06] hover:border-gold/20 transition-all duration-700 cursor-pointer h-fit"
+                className="group relative flex flex-col border border-ivory/[0.06] hover:border-gold/20 transition-all duration-700 cursor-pointer h-fit shadow-[0_0_20px_rgba(200,169,110,0.05)] md:shadow-none"
               >
                 {/* Image area */}
                 <div className="relative aspect-[3/4] flex items-center justify-center overflow-hidden"
