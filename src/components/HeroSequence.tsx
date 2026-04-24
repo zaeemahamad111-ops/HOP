@@ -97,14 +97,19 @@ export default function HeroSequence() {
       const ch = canvas.height;
       const iw = img.naturalWidth;
       const ih = img.naturalHeight;
-      const scale = Math.max(cw / iw, ch / ih);
+      const isMobile = window.innerWidth < 768;
+      
+      // Zoom out slightly on mobile (0.85x) to reveal more of the bottle height
+      const scale = Math.max(cw / iw, ch / ih) * (isMobile ? 0.85 : 1);
       const sw = iw * scale;
       const sh = ih * scale;
+      
+      // Center and add a slight top margin on mobile to show the cap
       const sx = (cw - sw) / 2;
-      const sy = (ch - sh) / 2;
-      const isMobile = window.innerWidth < 768;
-      // Aggressive left shift to pull the bottle from the far right into the visual center
-      const offsetX = isMobile ? (sw - cw) * -0.28 : 0; 
+      const sy = (ch - sh) / 2 + (isMobile ? 40 : 0);
+      
+      // Subtle horizontal centering adjustment
+      const offsetX = isMobile ? (sw - cw) * -0.06 : 0; 
       
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
