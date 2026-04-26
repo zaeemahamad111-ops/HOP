@@ -67,8 +67,14 @@ export const shopify = {
               # Using Metafields for our custom brand data
               # Namespace: custom
               notes_top: metafield(namespace: "custom", key: "notes_top") { value }
+              top_note: metafield(namespace: "custom", key: "top_note") { value }
+              
               notes_heart: metafield(namespace: "custom", key: "notes_heart") { value }
+              middle_note: metafield(namespace: "custom", key: "middle_note") { value }
+              
               notes_base: metafield(namespace: "custom", key: "notes_base") { value }
+              base_note: metafield(namespace: "custom", key: "base_note") { value }
+              
               accent: metafield(namespace: "custom", key: "accent") { value }
               ml: metafield(namespace: "custom", key: "ml") { value }
               descriptor: metafield(namespace: "custom", key: "descriptor") { value }
@@ -85,26 +91,124 @@ export const shopify = {
       return [];
     }
 
+    const cleanValue = (val: any) => {
+      if (!val) return null;
+      // Handle list types which come as '["value"]'
+      try {
+        const parsed = JSON.parse(val.value);
+        return Array.isArray(parsed) ? parsed[0] : parsed;
+      } catch {
+        return val.value;
+      }
+    };
+
     return response.data.products.edges.map(({ node }: any) => ({
       id: node.id,
+      handle: node.handle,
       name: node.title,
       category: node.productType || 'Eau de Parfum',
       categoryShort: node.productType === 'Attars' ? 'Attar' : 'EDP',
       price: parseFloat(node.priceRange.minVariantPrice.amount),
-      ml: node.ml?.value || '50ml',
-      descriptor: node.descriptor?.value || node.description.substring(0, 100),
+      ml: cleanValue(node.ml) || '50ml',
+      descriptor: cleanValue(node.descriptor) || node.description.substring(0, 100),
       stock: node.variants.edges[0]?.node.quantityAvailable || 0,
       sku: node.variants.edges[0]?.node.sku || '',
       status: 'Active',
       image: node.images.edges[0]?.node.url || '',
-      accent: node.accent?.value || '#C8A96E',
+      accent: cleanValue(node.accent) || '#C8A96E',
       variantId: node.variants.edges[0]?.node.id || '',
       notes: {
-        top: node.notes_top?.value || 'Spices',
-        heart: node.notes_heart?.value || 'Floral',
-        base: node.notes_base?.value || 'Woods'
+        top: cleanValue(node.notes_top) || cleanValue(node.top_note) || 'Spices',
+        heart: cleanValue(node.notes_heart) || cleanValue(node.middle_note) || 'Floral',
+        base: cleanValue(node.notes_base) || cleanValue(node.base_note) || 'Woods'
       }
     }));
+  },
+
+  /**
+   * Fetch a single product by its handle
+   */
+  getProductByHandle: async (handle: string) => {
+    const query = `
+      query getProductByHandle($handle: String!) {
+        product(handle: $handle) {
+          id
+          title
+          handle
+          description
+          productType
+          priceRange {
+            minVariantPrice {
+              amount
+            }
+          }
+          images(first: 5) {
+            edges {
+              node {
+                url
+                altText
+              }
+            }
+          }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+                sku
+                quantityAvailable
+              }
+            }
+          }
+          notes_top: metafield(namespace: "custom", key: "notes_top") { value }
+          top_note: metafield(namespace: "custom", key: "top_note") { value }
+          notes_heart: metafield(namespace: "custom", key: "notes_heart") { value }
+          middle_note: metafield(namespace: "custom", key: "middle_note") { value }
+          notes_base: metafield(namespace: "custom", key: "notes_base") { value }
+          base_note: metafield(namespace: "custom", key: "base_note") { value }
+          accent: metafield(namespace: "custom", key: "accent") { value }
+          ml: metafield(namespace: "custom", key: "ml") { value }
+          descriptor: metafield(namespace: "custom", key: "descriptor") { value }
+        }
+      }
+    `;
+
+    const response = await shopifyFetch<any>({ query, variables: { handle } });
+    
+    if (response.errors || !response.data?.product) {
+      console.error('Shopify Product Detail Error:', response.errors);
+      return null;
+    }
+
+    const node = response.data.product;
+    const cleanValue = (val: any) => {
+      if (!val) return null;
+      try {
+        const parsed = JSON.parse(val.value);
+        return Array.isArray(parsed) ? parsed[0] : parsed;
+      } catch {
+        return val.value;
+      }
+    };
+
+    return {
+      id: node.id,
+      handle: node.handle,
+      name: node.title,
+      description: node.description,
+      category: node.productType || 'Eau de Parfum',
+      price: parseFloat(node.priceRange.minVariantPrice.amount),
+      ml: cleanValue(node.ml) || '50ml',
+      descriptor: cleanValue(node.descriptor) || '',
+      image: node.images.edges[0]?.node.url || '',
+      images: node.images.edges.map((e: any) => e.node.url),
+      accent: cleanValue(node.accent) || '#C8A96E',
+      variantId: node.variants.edges[0]?.node.id || '',
+      notes: {
+        top: cleanValue(node.notes_top) || cleanValue(node.top_note) || 'Spices',
+        heart: cleanValue(node.notes_heart) || cleanValue(node.middle_note) || 'Floral',
+        base: cleanValue(node.notes_base) || cleanValue(node.base_note) || 'Woods'
+      }
+    };
   },
 
   /**
