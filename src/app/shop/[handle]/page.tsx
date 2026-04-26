@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CartButtonPDP from "@/components/CartButtonPDP";
+import ProductCard from "@/components/ProductCard";
 
 interface Props {
   params: Promise<{ handle: string }>;
@@ -121,21 +122,31 @@ export default async function ProductPage({ params }: Props) {
                </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* Suggested Products Section - Quick implementation */}
-      <div className="border-t border-ivory/5 mt-20 py-20 px-8 md:px-20 bg-ivory/[0.01]">
-         <div className="max-w-[1600px] mx-auto text-center mb-16">
-            <span className="text-[10px] tracking-[0.5em] text-gold uppercase font-bold block mb-4">Complete the Archive</span>
-            <h2 className="font-display text-4xl md:text-5xl">You might also enjoy</h2>
-         </div>
-         {/* Simple back button for now */}
-         <div className="flex justify-center">
-            <Link href="/shop" className="px-10 py-4 border border-gold/30 text-gold text-[10px] tracking-[0.3em] font-bold hover:bg-gold hover:text-teak transition-all">
-               BACK TO COLLECTION
-            </Link>
+      {/* Suggested Products Section */}
+      <div className="border-t border-ivory/5 mt-20 py-32 px-8 md:px-20 bg-ivory/[0.01]">
+         <div className="max-w-[1600px] mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+               <div>
+                  <span className="text-[10px] tracking-[0.5em] text-gold uppercase font-bold block mb-4">Complete the Archive</span>
+                  <h2 className="font-display text-4xl md:text-6xl tracking-tight">You might also enjoy</h2>
+               </div>
+               <Link href="/shop" className="text-[10px] tracking-[0.3em] text-ivory/40 hover:text-gold transition-colors border-b border-ivory/10 pb-1">
+                  VIEW ALL PRODUCTS
+               </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+               {(await shopify.getProducts())
+                  .filter(p => p.handle !== handle)
+                  .slice(0, 3)
+                  .map((suggestion, idx) => (
+                    <ProductCard key={suggestion.id} product={suggestion} index={idx} />
+                  ))
+               }
+            </div>
          </div>
       </div>
     </main>
