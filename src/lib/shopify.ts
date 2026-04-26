@@ -241,6 +241,10 @@ export const shopify = {
           {
             key: "_return_url",
             value: `${SITE_URL}/shop`
+          },
+          {
+            key: "_success_url",
+            value: `${SITE_URL}/order-success`
           }
         ]
       }
