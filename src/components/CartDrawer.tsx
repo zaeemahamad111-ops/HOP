@@ -5,7 +5,6 @@ import { X, Plus, Minus } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { shopify } from "@/lib/shopify";
 
 const imageMap: Record<string, string> = {
   "Monsoon Vetiver": "/perfume 1.png",
@@ -21,14 +20,20 @@ export default function CartDrawer() {
   const [mounted, setMounted] = useState(false);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  const handleCheckout = async () => {
+    const handleCheckout = async () => {
     if (items.length === 0) return;
     setIsCheckingOut(true);
     try {
-      const checkoutUrl = await shopify.createCheckout(
-        items.map(i => ({ variantId: i.variantId, quantity: i.quantity }))
-      );
-      window.location.href = checkoutUrl;
+      const res = await fetch('/api/shopify/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map(i => ({ variantId: i.variantId, quantity: i.quantity }))
+        })
+      });
+      const { webUrl, error } = await res.json();
+      if (error) throw new Error(error);
+      window.location.href = webUrl;
     } catch (err) {
       console.error("Checkout failed:", err);
       setIsCheckingOut(false);

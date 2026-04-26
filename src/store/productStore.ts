@@ -61,11 +61,12 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchData: async () => {
     set({ isLoading: true });
     try {
-      const { shopify } = await import('@/lib/shopify');
-      const products = await shopify.getProducts();
+      const res = await fetch('/api/shopify/products');
+      const products = await res.json();
+      if (products.error) throw new Error(products.error);
       set({ products, isLoading: false });
     } catch (error) {
-      console.error('Failed to fetch data from Shopify:', error);
+      console.error('Failed to fetch data from Shopify via API:', error);
       set({ isLoading: false });
     }
   },
