@@ -6,11 +6,12 @@ import { notFound } from "next/navigation";
 import CartButtonPDP from "@/components/CartButtonPDP";
 
 interface Props {
-  params: { handle: string };
+  params: Promise<{ handle: string }>;
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await shopify.getProductByHandle(params.handle);
+  const { handle } = await params;
+  const product = await shopify.getProductByHandle(handle);
 
   if (!product) {
     notFound();
