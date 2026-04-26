@@ -19,11 +19,8 @@ async function shopifyFetch<T>({ query, variables = {} }: { query: string; varia
       next: { revalidate: 60 } // Cache for 60 seconds
     });
 
-    if (!res.ok) {
-      throw new Error(`Shopify API error: ${res.statusText}`);
-    }
-
-    return res.json();
+    const json = await res.json();
+    return json;
   } catch (error) {
     console.error('Error fetching from Shopify:', error);
     throw error;
@@ -111,16 +108,17 @@ export const shopify = {
   },
 
   /**
-   * Create a checkout URL for a list of items
+   * Create a checkout URL using the modern Cart API
    */
   createCheckout: async (items: { variantId: string; quantity: number }[]) => {
     const query = `
-      mutation checkoutCreate($input: CheckoutCreateInput!) {
-        checkoutCreate(input: $input) {
-          checkout {
-            webUrl
+      mutation cartCreate($input: CartInput!) {
+        cartCreate(input: $input) {
+          cart {
+            checkoutUrl
           }
-          checkoutUserErrors {
+          userErrors {
+            field
             message
           }
         }
@@ -129,14 +127,24 @@ export const shopify = {
 
     const variables = {
       input: {
-        lineItems: items.map(item => ({
-          variantId: item.variantId,
+        lines: items.map(item => ({
+          merchandiseId: item.variantId,
           quantity: item.quantity
         }))
       }
     };
 
     const response = await shopifyFetch<any>({ query, variables });
-    return response.data.checkoutCreate.checkout.webUrl;
+
+    if (response.data?.cartCreate?.userErrors?.length > 0) {
+      const errorMsg = response.data.cartCreate.userErrors[0].message;
+      throw new Error(errorMsg);
+    }
+
+    if (!response.data?.cartCreate?.cart?.checkoutUrl) {
+      throw new Error("Could not create cart checkout URL.");
+    }
+
+    return response.data.cartCreate.cart.checkoutUrl;
   }
 };

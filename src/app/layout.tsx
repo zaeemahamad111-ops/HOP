@@ -31,6 +31,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://hop-kerala.com'),
   title: {
     default: "HOP | Kerala's Finest Niche Fragrance House",
     template: "%s | HOP Kerala"
