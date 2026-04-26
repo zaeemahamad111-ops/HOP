@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 export interface Product {
   id: string;
+  handle: string; // Shopify URL slug — used for /shop/[handle] routing
   name: string;
   category: string;
   categoryShort: string;

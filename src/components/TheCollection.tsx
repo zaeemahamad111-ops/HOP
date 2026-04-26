@@ -111,7 +111,7 @@ export default function TheCollection() {
                     <div className="absolute inset-x-0 bottom-0 lg:translate-y-full lg:group-hover:translate-y-0 transition-transform duration-500 ease-out z-10 translate-y-0">
                       <button onClick={(e) => {
                         e.stopPropagation();
-                        addItem({id:product.id,name:product.name,price:product.price,category:product.category,quantity:1,image:product.image,notesSummary:`${product.notes.top} · ${product.notes.base}`});
+                        addItem({id:product.id,name:product.name,price:product.price,category:product.category,quantity:1,image:product.image,variantId:product.variantId,notesSummary:`${product.notes.top} · ${product.notes.base}`});
                       }}
                         className="w-full py-4 text-[11px] tracking-[0.3em] font-bold text-[#0a0805] bg-gold">
                         ADD TO RITUAL

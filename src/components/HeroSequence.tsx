@@ -118,6 +118,8 @@ export default function HeroSequence() {
 
     const tick = () => {
       // PERFORMANCE: Only run ticker if Hero is actually visible in the viewport
+      const wrap = wrapRef.current;
+      if (!wrap) return;
       const rect = wrap.getBoundingClientRect();
       const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
       if (!isVisible) return;
