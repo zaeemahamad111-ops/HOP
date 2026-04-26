@@ -140,9 +140,9 @@ export default async function ProductPage({ params }: Props) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                {(await shopify.getProducts())
-                  .filter(p => p.handle !== handle)
+                  .filter((p: any) => p.handle !== handle)
                   .slice(0, 3)
-                  .map((suggestion, idx) => (
+                  .map((suggestion: any, idx: number) => (
                     <ProductCard key={suggestion.id} product={suggestion} index={idx} />
                   ))
                }

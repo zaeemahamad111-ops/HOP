@@ -187,7 +187,7 @@ export default function ProductScrollCarousel() {
                 </div>
 
                 <button 
-                  onClick={() => addItem({ id: `carousel-${frag.id}`, name: frag.name, price: frag.price, category: "Eau de Parfum", quantity: 1, notesSummary: frag.notes[0].name })}
+                  onClick={() => addItem({ id: `carousel-${frag.id}`, name: frag.name, price: frag.price, category: "Eau de Parfum", quantity: 1, notesSummary: frag.notes[0].name, variantId: "gid://shopify/ProductVariant/placeholder" })}
                   className="w-fit px-8 py-4 text-[10px] tracking-[0.3em] font-bold text-teak" 
                   style={{ backgroundColor: frag.accent }}
                 >

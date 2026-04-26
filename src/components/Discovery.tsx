@@ -129,7 +129,7 @@ export default function Discovery() {
                       <h3 className="font-display text-ivory text-5xl mb-2 leading-tight">Monsoon<br />Vetiver</h3>
                       <p className="font-accent italic text-ivory/40 text-lg mb-8">Earth after rain — grounded, elemental, alive.</p>
                       <img src="/perfume 1.png" alt="Monsoon Vetiver" className="h-40 object-contain mx-auto mb-8" />
-                      <button onClick={() => { addItem({ id: "p1", name: "Monsoon Vetiver", price: 4500, category: "Eau de Parfum", quantity: 1, notesSummary: "Bergamot · Vetiver" }); reset(); }}
+                      <button onClick={() => { addItem({ id: "p1", name: "Monsoon Vetiver", price: 4500, category: "Eau de Parfum", quantity: 1, notesSummary: "Bergamot · Vetiver", variantId: "gid://shopify/ProductVariant/placeholder" }); reset(); }}
                         className="w-full bg-gold text-teak py-4 text-[10px] tracking-[0.3em] font-bold hover:bg-ivory transition-colors duration-300">
                         ADD TO CART — ₹4,500
                       </button>
