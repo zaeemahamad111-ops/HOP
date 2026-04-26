@@ -103,14 +103,21 @@ export default async function ProductPage({ params }: Props) {
                   </div>
                </div>
 
-               {/* Accordions (Placeholders for now) */}
+               {/* Editorial Sections */}
                <div className="divide-y divide-ivory/5 border-t border-ivory/5">
-                  {["Ingredients", "How to Ritual", "Shipping & Returns"].map((item) => (
-                    <div key={item} className="py-6 flex justify-between items-center group cursor-pointer hover:px-2 transition-all duration-300">
-                       <span className="text-xs tracking-[0.2em] uppercase text-ivory/40 group-hover:text-gold transition-colors">{item}</span>
-                       <span className="text-gold opacity-30 group-hover:opacity-100 transition-opacity">＋</span>
-                    </div>
-                  ))}
+                  <div className="py-8 space-y-4">
+                     <span className="text-[10px] tracking-[0.3em] uppercase text-gold font-bold">How to Ritual</span>
+                     <p className="text-ivory/40 text-sm leading-relaxed font-light">
+                        Spray on pulse points—wrists, neck, and behind the ears. Do not rub, as this breaks down the fragrance molecules. Let the scent settle and evolve with your body's natural warmth.
+                     </p>
+                  </div>
+                  
+                  <div className="py-8 space-y-4">
+                     <span className="text-[10px] tracking-[0.3em] uppercase text-gold font-bold">Shipping & Returns</span>
+                     <p className="text-ivory/40 text-sm leading-relaxed font-light">
+                        Complimentary shipping on all orders over ₹2000. Delivered in 3-5 business days across India. Due to the personal nature of fragrances, we only accept returns for damaged or incorrect items within 7 days of delivery.
+                     </p>
+                  </div>
                </div>
             </div>
           </div>
