@@ -65,73 +65,76 @@ export default function FeaturedProducts() {
             </div>
           ) : (
             featured.map((p, i) => (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ 
-                  opacity: 1, 
-                  y: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : (i === 0 ? 0 : i === 1 ? 60 : 120)
-                }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-                onMouseEnter={() => setHovered(p.id)}
-                onMouseLeave={() => setHovered(null)}
-                className="group relative flex flex-col border border-ivory/[0.06] hover:border-gold/20 transition-all duration-700 cursor-pointer h-fit shadow-[0_0_20px_rgba(200,169,110,0.05)] md:shadow-none"
-              >
-                {/* Image area */}
-                <div className="relative aspect-[3/4] flex items-center justify-center overflow-hidden will-change-transform"
-                  style={{ background: `radial-gradient(ellipse at center, ${p.accent || '#c8965a'}12 0%, #0a0805 75%)` }}>
+                <motion.div
+                  key={p.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : (i === 0 ? 0 : i === 1 ? 60 : 120)
+                  }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  onMouseEnter={() => setHovered(p.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="group relative flex flex-col border border-ivory/[0.06] hover:border-gold/20 transition-all duration-700 cursor-pointer h-fit shadow-[0_0_20px_rgba(200,169,110,0.05)] md:shadow-none"
+                >
+                  <Link href={`/shop/${p.handle}`} className="contents">
+                    {/* Image area */}
+                    <div className="relative aspect-[3/4] flex items-center justify-center overflow-hidden will-change-transform"
+                      style={{ background: `radial-gradient(ellipse at center, ${p.accent || '#c8965a'}12 0%, #0a0805 75%)` }}>
 
-                  {/* Accent glow */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
-                    style={{ background: `radial-gradient(circle at 50% 65%, ${p.accent || '#c8965a'}20 0%, transparent 70%)` }} />
+                      {/* Accent glow */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+                        style={{ background: `radial-gradient(circle at 50% 65%, ${p.accent || '#c8965a'}20 0%, transparent 70%)` }} />
 
-                  {/* Bottle - Optimized */}
-                  <div className="relative h-[72%] w-[70%] transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-3 will-change-transform">
-                    <Image 
-                      src={p.image} 
-                      alt={p.name} 
-                      fill 
-                      className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
+                      {/* Bottle - Optimized */}
+                      <div className="relative h-[72%] w-[70%] transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:-translate-y-3 will-change-transform">
+                        <Image 
+                          src={p.image} 
+                          alt={p.name} 
+                          fill 
+                          className="object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      </div>
 
-                  {/* Number badge */}
-                  <span className="absolute top-6 left-6 font-mono text-[10px] tracking-[0.3em] text-ivory/20">0{i + 1}</span>
-                </div>
-
-                {/* Info */}
-                <div className="p-6 md:p-8 flex flex-col gap-4 border-t border-ivory/5 bg-[#0a0805]">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-display text-2xl md:text-3xl text-ivory tracking-tight group-hover:text-gold transition-colors duration-500">{p.name}</h3>
-                      <span className="text-[9px] tracking-[0.25em] text-ivory/30 mt-1 block uppercase">{p.category} · {p.ml}</span>
+                      {/* Number badge */}
+                      <span className="absolute top-6 left-6 font-mono text-[10px] tracking-[0.3em] text-ivory/20">0{i + 1}</span>
                     </div>
-                    <span className="font-mono text-sm text-ivory/30 mt-1">₹{p.price.toLocaleString("en-IN")}</span>
-                  </div>
 
-                  <p className="font-accent italic text-ivory/40 text-base md:text-lg leading-relaxed">{p.descriptor}</p>
+                    {/* Info */}
+                    <div className="p-6 md:p-8 flex flex-col gap-4 border-t border-ivory/5 bg-[#0a0805]">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-display text-2xl md:text-3xl text-ivory tracking-tight group-hover:text-gold transition-colors duration-500">{p.name}</h3>
+                          <span className="text-[9px] tracking-[0.25em] text-ivory/30 mt-1 block uppercase">{p.category} · {p.ml}</span>
+                        </div>
+                        <span className="font-mono text-sm text-ivory/30 mt-1">₹{p.price.toLocaleString("en-IN")}</span>
+                      </div>
 
-                  {/* Notes row — appears on hover (and always on mobile) */}
-                  <div className={`flex gap-4 transition-all duration-500 overflow-hidden ${hovered === p.id || (typeof window !== 'undefined' && window.innerWidth < 768) ? "max-h-12 opacity-100 mt-2" : "max-h-0 opacity-0"}`}>
-                    {Object.values(p.notes).map((n, ni) => (
-                      <span key={ni} className="text-[9px] tracking-[0.2em] text-gold/70 uppercase">{n}</span>
-                    ))}
-                  </div>
+                      <p className="font-accent italic text-ivory/40 text-base md:text-lg leading-relaxed">{p.descriptor}</p>
 
-                  {/* Add to cart */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addItem({ id: p.id, name: p.name, price: p.price, category: p.category, quantity: 1, image: p.image, variantId: p.variantId, notesSummary: Object.values(p.notes).join(" · ") });
-                    }}
-                    className="mt-6 w-full py-5 text-[10px] tracking-[0.35em] font-bold text-[#0a0805] bg-gold hover:bg-ivory transition-all duration-500"
-                  >
-                    ADD TO CART
-                  </button>
-                </div>
-              </motion.div>
+                      {/* Notes row — appears on hover (and always on mobile) */}
+                      <div className={`flex gap-4 transition-all duration-500 overflow-hidden ${hovered === p.id || (typeof window !== 'undefined' && window.innerWidth < 768) ? "max-h-12 opacity-100 mt-2" : "max-h-0 opacity-0"}`}>
+                        {Object.values(p.notes).map((n, ni) => (
+                          <span key={ni} className="text-[9px] tracking-[0.2em] text-gold/70 uppercase">{n}</span>
+                        ))}
+                      </div>
+
+                      {/* Add to cart */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          addItem({ id: p.id, name: p.name, price: p.price, category: p.category, quantity: 1, image: p.image, variantId: p.variantId, notesSummary: Object.values(p.notes).join(" · ") });
+                        }}
+                        className="mt-6 w-full py-5 text-[10px] tracking-[0.35em] font-bold text-[#0a0805] bg-gold hover:bg-ivory transition-all duration-500 relative z-10"
+                      >
+                        ADD TO CART
+                      </button>
+                    </div>
+                  </Link>
+                </motion.div>
             ))
           )}
         </div>
