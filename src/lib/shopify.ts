@@ -229,12 +229,20 @@ export const shopify = {
       }
     `;
 
+    const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://hop-inky.vercel.app";
+
     const variables = {
       input: {
         lines: items.map(item => ({
           merchandiseId: item.variantId,
           quantity: item.quantity
-        }))
+        })),
+        attributes: [
+          {
+            key: "_return_url",
+            value: `${SITE_URL}/shop`
+          }
+        ]
       }
     };
 
