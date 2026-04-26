@@ -124,7 +124,7 @@ export default function FeaturedProducts() {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      addItem({ id: p.id, name: p.name, price: p.price, category: p.category, quantity: 1, image: p.image, notesSummary: Object.values(p.notes).join(" · ") });
+                      addItem({ id: p.id, name: p.name, price: p.price, category: p.category, quantity: 1, image: p.image, variantId: p.variantId, notesSummary: Object.values(p.notes).join(" · ") });
                     }}
                     className="mt-6 w-full py-5 text-[10px] tracking-[0.35em] font-bold text-[#0a0805] bg-gold hover:bg-ivory transition-all duration-500"
                   >

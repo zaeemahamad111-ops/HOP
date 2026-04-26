@@ -161,6 +161,7 @@ export default function ShopPage() {
                           category: product.category, 
                           quantity: 1, 
                           image: product.image,
+                          variantId: product.variantId,
                           notesSummary: `${product.notes.top} · ${product.notes.base}` 
                         });
                       }}

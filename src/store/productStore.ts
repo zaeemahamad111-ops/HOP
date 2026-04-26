@@ -13,6 +13,7 @@ export interface Product {
   status: string;
   image: string;
   accent?: string;
+  variantId: string; // Required for Shopify checkout
   notes: {
     top: string;
     heart: string;
@@ -60,15 +61,11 @@ export const useProductStore = create<ProductState>((set, get) => ({
   fetchData: async () => {
     set({ isLoading: true });
     try {
-      const [pRes, oRes] = await Promise.all([
-        fetch('/api/products'),
-        fetch('/api/orders')
-      ]);
-      const products = await pRes.json();
-      const orders = await oRes.json();
-      set({ products, orders, isLoading: false });
+      const { shopify } = await import('@/lib/shopify');
+      const products = await shopify.getProducts();
+      set({ products, isLoading: false });
     } catch (error) {
-      console.error('Failed to fetch data:', error);
+      console.error('Failed to fetch data from Shopify:', error);
       set({ isLoading: false });
     }
   },

@@ -9,6 +9,7 @@ export interface CartItem {
   quantity: number;
   image?: string;
   notesSummary?: string;
+  variantId: string; // Required for Shopify checkout
 }
 
 interface CartState {

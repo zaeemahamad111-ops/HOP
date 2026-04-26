@@ -5,6 +5,7 @@ import { X, Plus, Minus } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { shopify } from "@/lib/shopify";
 
 const imageMap: Record<string, string> = {
   "Monsoon Vetiver": "/perfume 1.png",
@@ -18,6 +19,21 @@ const imageMap: Record<string, string> = {
 export default function CartDrawer() {
   const { isOpen, setIsOpen, items, updateQuantity, removeItem, getCartTotal } = useCartStore();
   const [mounted, setMounted] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  const handleCheckout = async () => {
+    if (items.length === 0) return;
+    setIsCheckingOut(true);
+    try {
+      const checkoutUrl = await shopify.createCheckout(
+        items.map(i => ({ variantId: i.variantId, quantity: i.quantity }))
+      );
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      console.error("Checkout failed:", err);
+      setIsCheckingOut(false);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -143,9 +159,13 @@ export default function CartDrawer() {
                   <span className="font-display text-ivory/80 tracking-wide">Total</span>
                   <span className="font-mono text-gold text-xl">₹{total.toLocaleString('en-IN')}</span>
                 </div>
-                <Link href="/checkout" onClick={() => setIsOpen(false)} className="block w-full bg-gold text-[#0a0805] py-4 text-center text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-ivory transition-colors duration-300">
-                  Proceed to Checkout
-                </Link>
+                <button 
+                  disabled={isCheckingOut}
+                  onClick={handleCheckout} 
+                  className="block w-full bg-gold text-[#0a0805] py-4 text-center text-[11px] font-bold tracking-[0.3em] uppercase hover:bg-ivory transition-colors duration-300 disabled:opacity-50"
+                >
+                  {isCheckingOut ? "Preparing Ritual..." : "Proceed to Checkout"}
+                </button>
                 <p className="text-center text-[10px] text-ivory/40 tracking-widest uppercase">Shipping & taxes calculated at checkout</p>
               </div>
             )}
